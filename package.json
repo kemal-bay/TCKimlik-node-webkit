@@ -1,0 +1,15 @@
+{
+  "name": "TCKimlik",
+  "version": "1.0.0",
+  "description": "TC kimlik no doğrulama uygulaması",
+  "main": "index.html",
+  "author": "Kemal Bay",
+  "window": {
+    "toolbar": false,
+    "width": 400,
+    "height": 520
+  },
+  "dependencies": {
+    "soap": "0.10.3"
+  }
+}
