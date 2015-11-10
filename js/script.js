@@ -3,9 +3,9 @@ TCKimlik = {
 		url: 'https://tckimlik.nvi.gov.tr/Service/KPSPublic.asmx?wsdl'
 	},
 	lib: {
-		os: require('os'),
-		gui: require('nw.gui'),
-		soap: require("soap")
+		os: null, //require('os'),
+		gui: null, //require('nw.gui'),
+		soap: null //require("soap")
 	},
 	validateForm: function(e){
 		e.preventDefault();
@@ -14,7 +14,7 @@ TCKimlik = {
 			TCKimlikNo: parseInt($("input[name=identity]").val()),
 			Ad: $("input[name=firstName]").val().replace("i","İ").replace("ı","I").toUpperCase(),
 			Soyad: $("input[name=lastName]").val().replace("i","İ").replace("ı","I").toUpperCase(),
-			DogumYili: parseInt($("input[name=yearOfBirth]").val()),
+			DogumYili: parseInt($("select[name=yearOfBirth]").val()),
 		},errors = [];
 
 		if(args.Ad.length < 3){ errors.push("Ad geçersiz gözüküyor"); }
@@ -24,26 +24,23 @@ TCKimlik = {
 		}
 
 		if(errors.length > 0){
-			$("#result").html(errors.join("<br>")).addClass("text-danger");
+			TCKimlik.showResult(false, errors.join("<br>"));
 		}else{
 			TCKimlik.processForm(args,TCKimlik.showResult);
 		}
 	},
 	resetForm: function(e){
 		e.preventDefault();
-		$("input[name=identity]").val("");
-		$("input[name=firstName]").val("");
-		$("input[name=lastName]").val("");
-		$("input[name=yearOfBirth]").val("");
-		$("#result").removeClass("text-success").removeClass("text-danger").text("");
+		$("form")[0].reset();
+		$('.alert').remove();
 	},
 	processForm: function(args, callback){
 		if(false === TCKimlik.checkTCKimlikNo(args.TCKimlikNo)){
-			TCKimlik.showResult(false);
+			TCKimlik.showResult(false, 'TC Kimlik No geçersiz');
 		}else{
 			TCKimlik.lib.soap.createClient(TCKimlik.config.url, function(err, client) {
 				client.TCKimlikNoDogrula(args, function(err, result) {
-					callback(result.TCKimlikNoDogrulaResult);
+					callback(result.TCKimlikNoDogrulaResult, result.TCKimlikNoDogrulaResult ? 'TC Kimlik No doğrulandı' : 'TC Kimlik No doğrulanamadı');
 				});
 			});
 		}
@@ -68,14 +65,16 @@ TCKimlik = {
 	        return tckn.substring(9, 11) == [c10, c11].join('');
 	    }
 	},
-	showResult: function(result){
-		if(result){
-			$("#result").text("Kimlik numarası doğrulandı").addClass("text-success");
-		}else{
-			$("#result").text("Kimlik numarası doğrulanamadı").addClass("text-danger");
-		}
+	showResult: function(result, text){
+		$('.alert').alert('close');
+		$('h3').after('<div role="alert" class="alert alert-' + (result ? 'success' : 'danger') + ' alert-dismissible fade in"><button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button><h4>' + (result ? 'Başarılı!' : 'HATA!') + '</h4><p>' + text + '</p></div>');
 	},
 	init: function(){
+		var i, years = [];
+		for(var i = (new Date()).getFullYear() - 18; i >= 1900; i--) {
+			years.push(i);
+		}
+		$('select').select2({ data: years, placeholder: "Doğum yılı", allowClear: true });
 		$(document).on("click", "#submit",TCKimlik.validateForm);
 		$(document).on("click", "#reset",TCKimlik.resetForm);
 	}

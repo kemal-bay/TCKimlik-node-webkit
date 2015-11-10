@@ -4,50 +4,41 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>TC Kimlik Numarası Doğrulama</title>
+	<link rel="stylesheet" href="./css/reset-bootstrap.css">
+	<link rel="stylesheet" href="./css/select2.min.css">
+	<link rel="stylesheet" href="./css/select2-bootstrap.min.css">
 	<link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-	<form class="form-horizontal">
-		<fieldset>
-			<div class="control-group">
-			  <label class="control-label" for="identity">TC Kimlik Numarası</label>
-			  <div class="controls">
-			    <input id="identity" name="identity" type="text" placeholder="12345678901" class="input-xlarge" maxlength="11">
-			    <p class="help-block">Doğrulanacak TC Kimlik numarasını yazınız</p>
-			  </div>
-			</div>
-			<div class="control-group">
-			  <label class="control-label" for="firstName">Ad</label>
-			  <div class="controls">
-			    <input id="firstName" name="firstName" type="text" placeholder="Kemal" class="input-xlarge">
-			    <p class="help-block">Kimlik üzerinde yazan şekilde yazınız</p>
-			  </div>
-			</div>
-			<div class="control-group">
-			  <label class="control-label" for="lastName">Soyad</label>
-			  <div class="controls">
-			    <input id="lastName" name="lastName" type="text" placeholder="Bay" class="input-xlarge">
-			    <p class="help-block">Kimlik üzerinde yazan şekilde yazınız</p>
-			  </div>
-			</div>
-			<div class="control-group">
-			  <label class="control-label" for="yearOfBirth">Doğum yılı</label>
-			  <div class="controls">
-			    <input id="yearOfBirth" name="yearOfBirth" type="text" placeholder="1985" class="input-xlarge" maxlength="4">
-			    <p class="help-block">Kimlik üzerinde yazan şekilde doğum yılını dört hane şeklinde yazınız</p>
-			  </div>
-			</div>
-			<div class="control-group">
-			  <div class="controls">
-			    <button id="submit" name="submit" class="btn btn-success">Doğrula</button>
-			    <button id="reset" name="reset" class="btn btn-danger">Formu temizle</button>
-			  </div>
-			</div>
-		</fieldset>
-	</form>
-
-	<p id="result"></p>
+	<div class="container">
+        <div class="content">
+            <h3>TC Kimlik No Doğrulama</h3>
+            <form action="" method="post" class="clearfix">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span></span><input class="form-control" placeholder="TC Kimlik No" name="identity" id="identity" maxlength="11" type="text">
+                </div>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span><input class="form-control" placeholder="Ad" name="firstName" id="firstName" type="text">
+                </div>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span><input class="form-control" placeholder="Soyad" name="lastName" id="lastName" type="text">
+                </div>
+                <div class="input-group input-group-lg select2-bootstrap-prepend">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
+                    <div class="select2-wrapper">
+						<select class="form-control" name="yearOfBirth" id="yearOfBirth"></select>
+					</div>
+                </div>
+                <div class="pull-right clear">
+                    <button class="btn btn-primary" type="submit" id="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Sorgula</button>
+                    <button class="btn btn-danger" id="reset" name="reset"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Formu temizle</button>
+                </div>
+            </form>
+        </div>
+    </div>
 	<script src="./js/jquery.min.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/select2.min.js"></script>
 	<script src="./js/script.js"></script>
 </body>
 </html>
