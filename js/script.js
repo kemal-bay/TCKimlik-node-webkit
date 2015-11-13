@@ -1,11 +1,11 @@
-TCKimlik = {
+var TCKimlik = {
 	config: {
 		url: 'https://tckimlik.nvi.gov.tr/Service/KPSPublic.asmx?wsdl'
 	},
 	lib: {
-		os: null, //require('os'),
-		gui: null, //require('nw.gui'),
-		soap: null //require("soap")
+		os: require('os'),
+		gui: require('nw.gui'),
+		soap: require("soap")
 	},
 	validateForm: function(e){
 		e.preventDefault();
@@ -31,7 +31,8 @@ TCKimlik = {
 	},
 	resetForm: function(e){
 		e.preventDefault();
-		$("form")[0].reset();
+		$("form").clearForm();
+		$("select").select2("val", "");
 		$('.alert').remove();
 	},
 	processForm: function(args, callback){
